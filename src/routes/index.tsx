@@ -1,8 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import hero from "@/assets/tecnico-geladeira.jpg";
+import heroDesk from "@/assets/hero-desktop.png.asset.json";
+import heroMob from "@/assets/hero-mobile.png.asset.json";
 import logo from "@/assets/qualitech-logo.png.asset.json";
-import fachada from "@/assets/qualitech-fachada.png.asset.json";
+import fachada from "@/assets/fachada-loja.jpg.asset.json";
 import { PHONE_DISPLAY, whatsappLink } from "@/lib/whatsapp";
 
 export const Route = createFileRoute("/")({
@@ -160,41 +161,34 @@ function Index() {
         </div>
       </header>
 
-      {/* Hero */}
-      <section className="relative overflow-hidden bg-primary text-primary-foreground">
-        <div className="mx-auto grid max-w-6xl gap-8 px-4 pb-12 pt-8 md:grid-cols-[1.1fr_1fr] md:items-center md:gap-12 md:py-20">
-          <div className="order-2 md:order-1">
-            <a
-              href="#avaliacoes"
-              className="inline-flex items-center gap-2 rounded-full bg-primary-foreground/10 px-3 py-1.5 text-sm"
-            >
+      {/* Hero: fills exactly the first screen (minus header) */}
+      <section className="relative isolate flex h-[calc(100svh-4rem)] min-h-[520px] items-end overflow-hidden text-primary-foreground md:items-center">
+        <picture className="absolute inset-0 -z-10">
+          <source media="(min-width: 768px)" srcSet={heroDesk.url} />
+          <img
+            src={heroMob.url}
+            alt="Técnico consertando uma geladeira na cozinha do cliente"
+            className="h-full w-full object-cover object-[50%_35%] md:object-center"
+            fetchPriority="high"
+          />
+        </picture>
+        <div className="hero-scrim absolute inset-0 -z-10" />
+        <div className="mx-auto w-full max-w-6xl px-5 pb-28 md:pb-0">
+          <div className="max-w-xl">
+            <a href="#avaliacoes" className="inline-flex items-center gap-2 text-sm">
               <Stars /> <strong>5,0</strong> no Google · 252 avaliações
             </a>
-            <h1 className="mt-5 text-4xl font-extrabold leading-[1.02] md:text-6xl">
+            <h1 className="mt-3 text-[2.5rem] font-extrabold leading-[1.02] md:text-6xl">
               Geladeira parou? A gente resolve rápido.
             </h1>
-            <p className="mt-5 max-w-lg text-lg text-primary-foreground/80">
-              Conserto de geladeira, máquina de lavar, lava e seca e micro-ondas em São José e região. Orçamento antes
-              do serviço, preço justo e técnico que explica tudo.
+            <p className="mt-3 text-base text-primary-foreground/85 md:mt-5 md:text-lg">
+              Conserto de geladeira, máquina de lavar e micro-ondas em São José e região.
             </p>
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
+            <div className="mt-6 hidden flex-col gap-3 sm:flex-row sm:items-center md:flex">
               <WhatsButton msg={generic} pulse>
                 Pedir orçamento no WhatsApp
               </WhatsButton>
-              <span className="text-sm text-primary-foreground/70">Resposta rápida · Aberto até 00h</span>
-            </div>
-          </div>
-          <div className="relative order-1 -mx-4 md:order-2 md:mx-0">
-            <img
-              src={hero}
-              alt="Técnico da Qualitech consertando o compressor de uma geladeira"
-              width={1280}
-              height={1280}
-              className="aspect-[4/3] w-full object-cover md:aspect-square md:rounded-[2rem]"
-            />
-            <div className="absolute bottom-4 left-4 rounded-2xl bg-card px-4 py-3 text-card-foreground shadow-lift md:-left-8 md:bottom-8">
-              <p className="font-display text-2xl font-extrabold">252</p>
-              <p className="text-sm text-muted-foreground">clientes deram 5 estrelas</p>
+              <span className="text-sm text-primary-foreground/75">Resposta rápida · Aberto até 00h</span>
             </div>
           </div>
         </div>
