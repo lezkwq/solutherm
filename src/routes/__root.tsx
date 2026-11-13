@@ -81,22 +81,31 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Qualitech — Conserto de geladeira em São José SC" },
-      { name: "description", content: "Assistência técnica em refrigeração e eletrodomésticos em São José - SC." },
-      { property: "og:title", content: "Qualitech — Solução em refrigeração" },
-      { property: "og:description", content: "Assistência técnica em refrigeração e eletrodomésticos em São José - SC." },
+      { title: "ClimaLev | Refrigeração e climatização em Joinville" },
+      {
+        name: "description",
+        content: "Climatização, refrigeração e manutenção industrial em Joinville – SC.",
+      },
+      { property: "og:title", content: "ClimaLev | Refrigeração e climatização em Joinville" },
+      {
+        property: "og:description",
+        content: "Climatização, refrigeração e manutenção industrial em Joinville – SC.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-          ],
+    ],
     links: [
       {
         rel: "stylesheet",
         href: appCss,
       },
-      { rel: "icon", type: "image/png", href: "/favicon.png" },
+      { rel: "icon", type: "image/svg+xml", href: "/favicon.svg" },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
-      { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Figtree:wght@400;500;600;700&display=swap" },
+      {
+        rel: "stylesheet",
+        href: "https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Figtree:wght@400;500;600;700&display=swap",
+      },
     ],
   }),
   shellComponent: RootShell,

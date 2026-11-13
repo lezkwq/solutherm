@@ -1,96 +1,143 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
-import heroDesk from "@/assets/hero-desktop.jpg";
-import heroMob from "@/assets/hero-mobile.jpg";
-import logo from "@/assets/qualitech-logo.png";
-import fachada from "@/assets/fachada-loja.jpg";
-import { PHONE_DISPLAY, whatsappLink } from "@/lib/whatsapp";
+import { Menu, Snowflake, X } from "lucide-react";
+import heroDesk from "@/assets/climalev-hero-desktop.webp";
+import heroMob from "@/assets/climalev-hero-mobile.webp";
+import maintenancePhoto from "@/assets/climalev-manutencao.webp";
+import { PHONE_DISPLAY, WHATSAPP_NUMBER, whatsappLink } from "@/lib/whatsapp";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Qualitech | Conserto de geladeira e eletrodomésticos em São José - SC" },
+      { title: "ClimaLev | Refrigeração e climatização em Joinville – SC" },
       {
         name: "description",
         content:
-          "Geladeira parou? Assistência técnica nota 5,0 no Google com 252 avaliações. Orçamento pelo WhatsApp (48) 99132-1945. São José e Grande Florianópolis.",
+          "Instalação, manutenção e reparo em climatização e refrigeração comercial e industrial em Joinville. Orçamento pelo WhatsApp.",
       },
-      { property: "og:title", content: "Qualitech — Conserto de geladeira em São José - SC" },
+      { property: "og:title", content: "ClimaLev | Refrigeração e climatização em Joinville" },
       {
         property: "og:description",
-        content: "Nota 5,0 no Google. Chame no WhatsApp e receba atendimento rápido.",
+        content:
+          "Climatização, refrigeração e manutenção industrial em Joinville. Solicite seu orçamento pelo WhatsApp.",
       },
       { property: "og:type", content: "website" },
+      { property: "og:image", content: heroDesk },
       { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: Index,
 });
 
-const APPLIANCES = [
-  { name: "Geladeira e freezer", msg: "Olá! Minha geladeira está com problema e preciso de um orçamento." },
-  { name: "Máquina de lavar", msg: "Olá! Minha máquina de lavar está com problema e preciso de um orçamento." },
-  { name: "Lava e seca", msg: "Olá! Minha lava e seca está com problema e preciso de um orçamento." },
-  { name: "Micro-ondas", msg: "Olá! Meu micro-ondas está com problema e preciso de um orçamento." },
-  { name: "Outro aparelho", msg: "Olá! Preciso de conserto em um eletrodoméstico. Podem me ajudar?" },
+const SERVICES = [
+  {
+    name: "Instalação de ar-condicionado",
+    msg: "Olá! Gostaria de um orçamento para instalação de ar-condicionado.",
+  },
+  {
+    name: "Limpeza e manutenção",
+    msg: "Olá! Preciso de limpeza ou manutenção no meu ar-condicionado.",
+  },
+  {
+    name: "Conserto de ar-condicionado",
+    msg: "Olá! Meu ar-condicionado está com problema e preciso de um orçamento.",
+  },
+  {
+    name: "Refrigeração comercial",
+    msg: "Olá! Preciso de atendimento para um equipamento de refrigeração comercial.",
+  },
+  {
+    name: "Manutenção industrial",
+    msg: "Olá! Gostaria de um orçamento para manutenção industrial.",
+  },
 ];
 
-const SYMPTOMS = [
+const DETAILS = [
   "Não gela ou gela pouco",
   "Fazendo barulho estranho",
   "Vazando água",
   "Não liga",
-  "Não centrifuga",
-  "Formando gelo demais",
+  "Limpeza preventiva",
+  "Instalação nova",
 ];
 
-const BRANDS = ["Brastemp", "Consul", "Electrolux", "Samsung", "LG", "Panasonic", "Fischer", "Philco"];
+const SYSTEMS = [
+  "Split",
+  "Cassete",
+  "Piso-teto",
+  "VRF / VRV",
+  "Refrigeração comercial",
+  "Climatização industrial",
+];
 
 const REVIEWS = [
   {
-    name: "Rafael Lima",
-    when: "7 meses atrás",
-    text: "Deixou uma geladeira para meu uso na minha casa enquanto realizava o conserto da minha. Não perdi as compras da semana. Tudo que foi acordado foi cumprido.",
+    name: "Ana Vitória Leite",
+    text: "um ótimo profissional, atendimento excepcional e trabalho muito bem executado.",
   },
   {
-    name: "Bruno Medeiros",
-    when: "7 meses atrás",
-    text: "O valor do conserto do meu micro-ondas ficou a metade do que havia orçado em outro local, o que demonstra a honestidade da Qualitech.",
+    name: "Leonardo Prado",
+    text: "Empresa nos atendeu super bem, pontuais e bem profissionais!! Sempre indicamos para nosso amigos e parceiros...",
   },
   {
-    name: "Jussara Martins",
-    when: "8 meses atrás",
-    text: "Precisei de atendimento com urgência e prontamente fui atendida. Sérgio super paciente pra explicar e solucionar o problema. Recomendo de olhos fechados.",
+    name: "Noeli Tolomiotti",
+    text: "Um excelente profissional. Trabalha com muita dedicação e é um trabalho de ótima qualidade. Super recomendo.",
   },
   {
-    name: "Andreia Mattos",
-    when: "3 meses atrás",
-    text: "Tivemos uma situação com nossa lava e seca. Eles prontamente nos ajudaram a resolver o problema e deixaram tudo ok. Ótimo preço.",
+    name: "Isabella Martins Viero",
+    text: "ótimo atendimento, serviço bem feito meu ar está gelando meu quarto inteiro sem nenhuma dificuldade",
   },
   {
-    name: "Tania Marlise Arnold",
-    when: "8 meses atrás",
-    text: "Visita técnica, orçamento, condições no cartão e um trabalho de excelente qualidade. Ainda retornaram dias depois para saber se deu tudo certo.",
+    name: "Baviera peça automotiva",
+    text: "Empresa competente e excelente profissional, resolve o problema, muito bom!",
   },
   {
-    name: "Lucas Souza",
-    when: "4 meses atrás",
-    text: "Atendimento online e presencial super cordial. Foram transparentes e objetivos quanto à resolução do problema e muito ágeis.",
+    name: "Maycon G. Prestes",
+    text: "ClimaLev é a salvação da nossa casa, com excelente atendimento e um baita profissionalismo, deixaram nossa casa literalmente com um CLIMALEVE rsrs, instalaram tudo nas mais perfeitas condições e com excelência, super indico os serviços da Climalev.",
   },
 ];
 
 const STEPS = [
-  { t: "Você chama no WhatsApp", d: "Conta qual é o aparelho e o que está acontecendo. Se puder, manda uma foto." },
-  { t: "Visita técnica", d: "O técnico vai até você, encontra o defeito e passa o orçamento antes de mexer." },
-  { t: "Conserto e acompanhamento", d: "Serviço feito com peça certa, pagamento no cartão, e a gente liga depois pra saber se ficou tudo bem." },
+  {
+    t: "Você chama no WhatsApp",
+    d: "Conte qual serviço precisa. Se puder, mande o modelo do equipamento e uma foto.",
+  },
+  {
+    t: "A gente avalia o serviço",
+    d: "Conversamos sobre sua necessidade e combinamos uma visita técnica quando for preciso.",
+  },
+  {
+    t: "Agendamos o atendimento",
+    d: "Com o orçamento aprovado, marcamos a instalação, manutenção ou reparo.",
+  },
 ];
 
 const FAQ = [
-  { q: "Vocês atendem em domicílio?", a: "Sim. Atendemos em São José e região da Grande Florianópolis com visita técnica na sua casa." },
-  { q: "Quais formas de pagamento?", a: "Cartão de crédito (com condições de parcelamento) e pagamento por aproximação no celular." },
-  { q: "Qual o horário de atendimento?", a: "Respondemos pelo WhatsApp todos os dias até meia-noite." },
-  { q: "Vou ficar sem geladeira durante o conserto?", a: "Quando o aparelho precisa ir para a oficina, conversamos sobre alternativas para você não perder seus alimentos." },
+  {
+    q: "Vocês atendem no local?",
+    a: "Sim. A ClimaLev realiza serviços no local em Joinville. Envie seu bairro pelo WhatsApp para consultar disponibilidade.",
+  },
+  {
+    q: "Posso pedir orçamento on-line?",
+    a: "Sim. Envie pelo WhatsApp o serviço de que precisa e, se possível, o modelo e fotos do equipamento.",
+  },
+  {
+    q: "Vocês fazem instalação e reparos?",
+    a: "Sim. Fazemos instalação, manutenção preventiva e reparos em sistemas de climatização.",
+  },
+  {
+    q: "Vocês atendem comércios e indústrias?",
+    a: "Sim. Entre em contato para conversar sobre refrigeração comercial, climatização ou manutenção industrial.",
+  },
 ];
+
+const NAVIGATION = [
+  { href: "#orcamento", label: "Serviços" },
+  { href: "#avaliacoes", label: "Avaliações" },
+  { href: "#contato", label: "Contato" },
+];
+
+const REVIEW_COUNT = 18;
 
 function WhatsIcon({ className = "size-5" }: { className?: string }) {
   return (
@@ -117,15 +164,18 @@ function WhatsButton({
   children,
   size = "lg",
   pulse = false,
+  onClick,
 }: {
   msg: string;
   children: React.ReactNode;
   size?: "lg" | "md";
   pulse?: boolean;
+  onClick?: () => void;
 }) {
   return (
     <a
       href={whatsappLink(msg)}
+      onClick={onClick}
       target="_blank"
       rel="noopener noreferrer"
       className={`inline-flex items-center justify-center gap-2.5 rounded-full bg-whats font-semibold text-whats-foreground shadow-whats transition-colors hover:bg-whats-dark focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-ring ${
@@ -139,10 +189,12 @@ function WhatsButton({
 }
 
 function Index() {
+  const [menuOpen, setMenuOpen] = useState(false);
   const [selected, setSelected] = useState(0);
-  const [symptom, setSymptom] = useState<string | null>(null);
-  const quoteMsg = `${APPLIANCES[selected]?.msg ?? ""}${symptom ? ` Problema: ${symptom.toLowerCase()}.` : ""}`;
+  const [detail, setDetail] = useState<string | null>(null);
+  const quoteMsg = `${SERVICES[selected]?.msg ?? ""}${detail ? ` Detalhe: ${detail.toLowerCase()}.` : ""}`;
   const generic = "Olá! Vim pelo site e gostaria de um orçamento.";
+  const menuButton = useRef<HTMLButtonElement>(null);
   const heroRef = useRef<HTMLElement>(null);
   const [pastHero, setPastHero] = useState(false);
   useEffect(() => {
@@ -154,61 +206,122 @@ function Index() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
-      {/* Header */}
-      <header className="absolute inset-x-0 top-0 z-40 md:sticky md:border-b md:border-border md:bg-background/90 md:backdrop-blur">
-        <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4">
-          <img src={logo} alt="Qualitech — Solução em refrigeração" className="h-12 w-auto rounded-xl md:h-14 md:rounded-none" width={56} height={56} />
-          <div className="hidden items-center gap-4 md:flex">
-            <a href={`tel:+5548991321945`} className="hidden text-sm font-semibold text-primary md:block">
-              {PHONE_DISPLAY}
-            </a>
+    <div
+      id="inicio"
+      className="min-h-screen bg-background text-foreground"
+      onKeyDown={(event) => {
+        if (event.key === "Escape" && menuOpen) {
+          setMenuOpen(false);
+          menuButton.current?.focus();
+        }
+      }}
+    >
+      <header className="absolute inset-x-0 top-0 z-40 text-primary-foreground md:sticky md:border-b md:border-border md:bg-background/95 md:text-foreground md:backdrop-blur">
+        <div className="relative mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-5">
+          <a
+            href="#inicio"
+            className="inline-flex items-center gap-2 font-display text-xl font-extrabold md:text-primary"
+          >
+            <Snowflake className="size-6" aria-hidden="true" />
+            ClimaLev
+          </a>
+          <nav
+            aria-label="Navegação principal"
+            className="hidden items-center gap-6 text-sm font-semibold md:flex"
+          >
+            {NAVIGATION.map(({ href, label }) => (
+              <a key={href} href={href} className="hover:text-primary hover:underline">
+                {label}
+              </a>
+            ))}
+          </nav>
+          <div className="hidden md:block">
             <WhatsButton msg={generic} size="md">
-              <span className="hidden sm:inline">Chamar no</span> WhatsApp
+              WhatsApp
             </WhatsButton>
           </div>
+          <button
+            type="button"
+            ref={menuButton}
+            aria-label={menuOpen ? "Fechar menu" : "Abrir menu"}
+            aria-expanded={menuOpen}
+            aria-controls="menu-mobile"
+            onClick={() => setMenuOpen(!menuOpen)}
+            className="grid size-11 place-items-center rounded-full border border-white/30 bg-black/35 md:hidden"
+          >
+            {menuOpen ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}
+          </button>
+          <nav
+            id="menu-mobile"
+            aria-label="Navegação móvel"
+            hidden={!menuOpen}
+            className="absolute inset-x-4 top-full rounded-2xl border border-border bg-card p-4 text-foreground shadow-xl md:hidden"
+          >
+            {NAVIGATION.map(({ href, label }) => (
+              <a
+                key={href}
+                href={href}
+                onClick={() => setMenuOpen(false)}
+                className="block rounded-lg px-3 py-3 font-semibold hover:bg-secondary"
+              >
+                {label}
+              </a>
+            ))}
+            <div className="mt-2">
+              <WhatsButton msg={generic} size="md" onClick={() => setMenuOpen(false)}>
+                Pedir orçamento
+              </WhatsButton>
+            </div>
+          </nav>
         </div>
       </header>
 
       {/* Hero: fills exactly the first screen (minus header) */}
-      <section ref={heroRef} className="relative isolate flex h-[100svh] min-h-[560px] md:h-[calc(100svh-4rem)] md:min-h-[520px] items-end overflow-hidden text-primary-foreground md:items-center">
+      <section
+        ref={heroRef}
+        className="relative isolate flex min-h-[max(100svh,500px)] md:min-h-[max(calc(100svh-4rem),520px)] items-end overflow-hidden text-primary-foreground md:items-center"
+      >
         <picture className="absolute inset-0 -z-10">
           <source media="(min-width: 768px)" srcSet={heroDesk} />
           <img
             src={heroMob}
-            alt="Técnico consertando uma geladeira na cozinha do cliente"
+            alt="Equipamentos de climatização instalados em uma cobertura"
             className="h-full w-full object-cover object-[50%_35%] md:object-center"
             fetchPriority="high"
           />
         </picture>
         <div className="hero-scrim absolute inset-0 -z-10" />
-        <div className="mx-auto w-full max-w-6xl px-5 pb-10 md:pb-0">
+        <div className="mx-auto w-full max-w-6xl px-5 pb-10 pt-24 md:py-0">
           <div className="max-w-xl">
             <a href="#avaliacoes" className="inline-flex items-center gap-2 text-sm">
-              <Stars /> <strong>5,0</strong> no Google · 252 avaliações
+              <Stars /> <strong>5,0</strong> no Google · {REVIEW_COUNT} avaliações
             </a>
             <h1 className="mt-3 text-[2.5rem] font-extrabold leading-[1.02] md:text-6xl">
-              Geladeira parou? A gente resolve rápido.
+              Climatização e refrigeração em Joinville
             </h1>
             <p className="mt-3 text-base text-primary-foreground/85 md:mt-5 md:text-lg">
-              Conserto de geladeira, máquina de lavar e micro-ondas em São José e região.
+              Instalação, reparos e manutenção para residências, comércios e indústrias.
             </p>
             <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
               <WhatsButton msg={generic} pulse>
-                <span className="hidden sm:inline">Pedir orçamento</span><span className="sm:hidden">Orçamento</span> no WhatsApp
+                <span className="whitespace-nowrap">Orçamento no WhatsApp</span>
               </WhatsButton>
-              <span className="hidden text-sm text-primary-foreground/75 md:inline">Resposta rápida · Aberto até 00h</span>
+              <span className="hidden text-sm text-primary-foreground/75 md:inline">
+                Orçamento on-line · Serviço no local
+              </span>
             </div>
           </div>
         </div>
       </section>
 
       {/* Quote builder */}
-      <section id="orcamento" className="mx-auto max-w-3xl px-4 py-14 md:py-20">
-        <h2 className="text-3xl font-extrabold md:text-4xl">Qual aparelho está com problema?</h2>
-        <p className="mt-2 text-muted-foreground">Escolha e já mandamos sua mensagem pronta no WhatsApp.</p>
+      <section id="orcamento" className="scroll-mt-16 mx-auto max-w-3xl px-4 py-14 md:py-20">
+        <h2 className="text-3xl font-extrabold md:text-4xl">Qual serviço você precisa?</h2>
+        <p className="mt-2 text-muted-foreground">
+          Escolha o serviço para montar sua mensagem de orçamento no WhatsApp.
+        </p>
         <div className="mt-6 flex flex-wrap gap-2">
-          {APPLIANCES.map((a, i) => (
+          {SERVICES.map((a, i) => (
             <button
               key={a.name}
               type="button"
@@ -226,14 +339,16 @@ function Index() {
         </div>
         <p className="mt-6 text-sm font-semibold">O que está acontecendo? (opcional)</p>
         <div className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-3">
-          {SYMPTOMS.map((s) => (
+          {DETAILS.map((s) => (
             <button
               key={s}
               type="button"
-              onClick={() => setSymptom(symptom === s ? null : s)}
-              aria-pressed={symptom === s}
+              onClick={() => setDetail(detail === s ? null : s)}
+              aria-pressed={detail === s}
               className={`rounded-xl border px-3 py-3 text-left text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
-                symptom === s ? "border-accent bg-accent/15 font-semibold" : "border-border bg-card hover:border-accent"
+                detail === s
+                  ? "border-accent bg-accent/15 font-semibold"
+                  : "border-border bg-card hover:border-accent"
               }`}
             >
               {s}
@@ -246,19 +361,20 @@ function Index() {
       </section>
 
       {/* Reviews */}
-      <section id="avaliacoes" className="bg-secondary py-14 md:py-20">
+      <section id="avaliacoes" className="scroll-mt-16 bg-secondary py-14 md:py-20">
         <div className="mx-auto max-w-6xl px-4">
           <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
             <div>
               <p className="font-display text-6xl font-extrabold text-primary md:text-7xl">5,0</p>
               <div className="mt-1 flex items-center gap-2">
                 <Stars />
-                <span className="text-muted-foreground">252 avaliações no Google</span>
+                <span className="text-muted-foreground">{REVIEW_COUNT} avaliações no Google</span>
               </div>
             </div>
             <p className="max-w-sm text-lg text-muted-foreground">
-              Os clientes falam mais de duas coisas: <strong className="text-foreground">honestidade</strong> e{" "}
-              <strong className="text-foreground">atendimento rápido</strong>.
+              Nas avaliações, os clientes destacam o{" "}
+              <strong className="text-foreground">atendimento</strong> e a{" "}
+              <strong className="text-foreground">qualidade do serviço</strong>.
             </p>
           </div>
           <div className="marquee-mask -mx-4 mt-8 overflow-hidden md:mx-0">
@@ -272,21 +388,25 @@ function Index() {
                   <Stars />
                   <blockquote className="mt-3 leading-relaxed">“{r.text}”</blockquote>
                   <figcaption className="mt-4 text-sm">
-                    <strong>{r.name}</strong> <span className="text-muted-foreground">· {r.when}</span>
+                    <strong>{r.name}</strong>
                   </figcaption>
                 </figure>
               ))}
             </div>
           </div>
           <div className="mt-6 text-center md:text-left">
-            <WhatsButton msg="Olá! Vi as avaliações no site e quero um orçamento.">Quero ser atendido assim</WhatsButton>
+            <WhatsButton msg="Olá! Vi as avaliações no site e quero um orçamento.">
+              Quero ser atendido assim
+            </WhatsButton>
           </div>
         </div>
       </section>
 
       {/* Steps */}
       <section className="mx-auto max-w-6xl px-4 py-14 md:py-20">
-        <h2 className="max-w-xl text-3xl font-extrabold md:text-4xl">Do primeiro “oi” ao aparelho funcionando</h2>
+        <h2 className="max-w-xl text-3xl font-extrabold md:text-4xl">
+          Como funciona o atendimento
+        </h2>
         <ol className="mt-10 grid gap-8 md:grid-cols-3">
           {STEPS.map((s, i) => (
             <li key={s.t} className="border-t-2 border-primary pt-5">
@@ -301,10 +421,13 @@ function Index() {
       {/* Brands */}
       <section className="border-y border-border py-10">
         <div className="mx-auto max-w-6xl px-4">
-          <p className="text-center text-muted-foreground">Assistência técnica especializada nas marcas</p>
+          <p className="text-center text-muted-foreground">Sistemas que atendemos</p>
           <ul className="mt-5 flex flex-wrap justify-center gap-x-8 gap-y-3">
-            {BRANDS.map((b) => (
-              <li key={b} className="font-display text-xl font-semibold text-primary/70 md:text-2xl">
+            {SYSTEMS.map((b) => (
+              <li
+                key={b}
+                className="font-display text-xl font-semibold text-primary/70 md:text-2xl"
+              >
                 {b}
               </li>
             ))}
@@ -313,24 +436,26 @@ function Index() {
       </section>
 
       {/* Location + FAQ */}
-      <section className="mx-auto grid max-w-6xl gap-12 px-4 py-14 md:grid-cols-2 md:py-20">
+      <section
+        id="contato"
+        className="scroll-mt-16 mx-auto grid max-w-6xl gap-12 px-4 py-14 md:grid-cols-2 md:py-20"
+      >
         <div>
-          <h2 className="text-3xl font-extrabold md:text-4xl">Empresa de verdade, endereço de verdade</h2>
+          <h2 className="text-3xl font-extrabold md:text-4xl">Atendimento em Joinville</h2>
           <img
-            src={fachada}
-            alt="Fachada da Qualitech em São José"
+            src={maintenancePhoto}
+            alt="Equipamento de refrigeração industrial durante manutenção"
             loading="lazy"
             className="mt-6 aspect-video w-full rounded-2xl object-cover"
           />
           <address className="mt-5 not-italic leading-relaxed">
-            R. João Paulo Gaspar, 2331 — Ipiranga
+            R. Dilma Virgilina Garcia, 107 — Aventureiro
             <br />
-            São José - SC, 88111-671
+            Joinville – SC, 89225-800
           </address>
-          <p className="mt-2 text-muted-foreground">Aberto todos os dias · Fecha 00:00</p>
-          <p className="mt-2 text-muted-foreground">Empresa de empreendedoras · Acesso para cadeirantes</p>
+          <p className="mt-2 text-muted-foreground">Empresa de empreendedoras</p>
           <a
-            href="https://www.google.com/maps/search/?api=1&query=Qualitech+Solu%C3%A7%C3%A3o+em+refrigera%C3%A7%C3%A3o+S%C3%A3o+Jos%C3%A9+SC"
+            href="https://www.google.com/maps/search/?api=1&query=ClimaLev+Refrigera%C3%A7%C3%A3o+Dilma+Virgilina+Garcia+107+Joinville+SC"
             target="_blank"
             rel="noopener noreferrer"
             className="mt-4 inline-block font-semibold text-primary underline underline-offset-4"
@@ -345,7 +470,9 @@ function Index() {
               <details key={f.q} className="group py-4">
                 <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-lg font-semibold">
                   {f.q}
-                  <span className="text-2xl text-accent transition-transform group-open:rotate-45">+</span>
+                  <span className="text-2xl text-accent transition-transform group-open:rotate-45">
+                    +
+                  </span>
                 </summary>
                 <p className="mt-2 text-muted-foreground">{f.a}</p>
               </details>
@@ -357,15 +484,20 @@ function Index() {
       {/* Final CTA */}
       <section className="bg-primary text-primary-foreground">
         <div className="mx-auto max-w-3xl px-4 py-16 text-center md:py-24">
-          <h2 className="text-4xl font-extrabold md:text-5xl">Não deixe a comida estragar.</h2>
+          <h2 className="text-4xl font-extrabold md:text-5xl">
+            Precisa instalar ou reparar seu equipamento?
+          </h2>
           <p className="mt-4 text-lg text-primary-foreground/80">
-            Manda uma mensagem agora e a gente te diz o que fazer.
+            Conte o que você precisa e solicite um orçamento pelo WhatsApp.
           </p>
           <div className="mt-8 flex flex-col items-center gap-4">
             <WhatsButton msg={generic} pulse>
-              Falar com a Qualitech
+              Falar com a ClimaLev
             </WhatsButton>
-            <a href="tel:+5548991321945" className="text-primary-foreground/80 underline underline-offset-4">
+            <a
+              href={`tel:+${WHATSAPP_NUMBER}`}
+              className="text-primary-foreground/80 underline underline-offset-4"
+            >
               ou ligue {PHONE_DISPLAY}
             </a>
           </div>
@@ -373,7 +505,8 @@ function Index() {
       </section>
 
       <footer className="px-4 pb-24 pt-8 md:py-8 text-center text-sm text-muted-foreground">
-        © {new Date().getFullYear()} Qualitech — Solução em refrigeração · São José - SC
+        © {new Date().getFullYear()} ClimaLev — Refrigeração, Climatização e Manutenção Industrial ·
+        Joinville – SC
       </footer>
 
       {/* Mobile sticky bar: appears only after scrolling past the hero */}
@@ -386,6 +519,7 @@ function Index() {
           href={whatsappLink(generic)}
           target="_blank"
           rel="noopener noreferrer"
+          tabIndex={pastHero ? undefined : -1}
           className="flex h-14 w-full items-center justify-center gap-2 rounded-full bg-whats text-lg font-semibold text-whats-foreground shadow-whats"
         >
           <WhatsIcon className="size-6" /> Pedir orçamento no WhatsApp
