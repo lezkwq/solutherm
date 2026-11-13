@@ -1,21 +1,21 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { Menu, Snowflake, X } from "lucide-react";
-import heroDesk from "@/assets/climalev-hero-desktop.webp";
-import heroMob from "@/assets/climalev-hero-mobile.webp";
-import maintenancePhoto from "@/assets/climalev-manutencao.webp";
+import heroDesk from "@/assets/solu-therm-hero-desktop.webp";
+import heroMob from "@/assets/solu-therm-hero-mobile.webp";
+import maintenancePhoto from "@/assets/solu-therm-manutencao.webp";
 import { PHONE_DISPLAY, WHATSAPP_NUMBER, whatsappLink } from "@/lib/whatsapp";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "ClimaLev | Refrigeração e climatização em Joinville – SC" },
+      { title: "SOLU THERM | Refrigeração e climatização em Joinville – SC" },
       {
         name: "description",
         content:
           "Instalação, manutenção e reparo em climatização e refrigeração comercial e industrial em Joinville. Orçamento pelo WhatsApp.",
       },
-      { property: "og:title", content: "ClimaLev | Refrigeração e climatização em Joinville" },
+      { property: "og:title", content: "SOLU THERM | Refrigeração e climatização em Joinville" },
       {
         property: "og:description",
         content:
@@ -93,7 +93,7 @@ const REVIEWS = [
   },
   {
     name: "Maycon G. Prestes",
-    text: "ClimaLev é a salvação da nossa casa, com excelente atendimento e um baita profissionalismo, deixaram nossa casa literalmente com um CLIMALEVE rsrs, instalaram tudo nas mais perfeitas condições e com excelência, super indico os serviços da Climalev.",
+    text: "instalaram tudo nas mais perfeitas condições e com excelência",
   },
 ];
 
@@ -115,7 +115,7 @@ const STEPS = [
 const FAQ = [
   {
     q: "Vocês atendem no local?",
-    a: "Sim. A ClimaLev realiza serviços no local em Joinville. Envie seu bairro pelo WhatsApp para consultar disponibilidade.",
+    a: "Sim. A SOLU THERM realiza serviços no local em Joinville. Envie seu bairro pelo WhatsApp para consultar disponibilidade.",
   },
   {
     q: "Posso pedir orçamento on-line?",
@@ -223,7 +223,7 @@ function Index() {
             className="inline-flex items-center gap-2 font-display text-xl font-extrabold md:text-primary"
           >
             <Snowflake className="size-6" aria-hidden="true" />
-            ClimaLev
+            SOLU THERM
           </a>
           <nav
             aria-label="Navegação principal"
@@ -455,7 +455,7 @@ function Index() {
           </address>
           <p className="mt-2 text-muted-foreground">Empresa de empreendedoras</p>
           <a
-            href="https://www.google.com/maps/search/?api=1&query=ClimaLev+Refrigera%C3%A7%C3%A3o+Dilma+Virgilina+Garcia+107+Joinville+SC"
+            href="https://www.google.com/maps/search/?api=1&query=SOLU+THERM+Refrigera%C3%A7%C3%A3o+Dilma+Virgilina+Garcia+107+Joinville+SC"
             target="_blank"
             rel="noopener noreferrer"
             className="mt-4 inline-block font-semibold text-primary underline underline-offset-4"
@@ -492,7 +492,7 @@ function Index() {
           </p>
           <div className="mt-8 flex flex-col items-center gap-4">
             <WhatsButton msg={generic} pulse>
-              Falar com a ClimaLev
+              Falar com a SOLU THERM
             </WhatsButton>
             <a
               href={`tel:+${WHATSAPP_NUMBER}`}
@@ -505,8 +505,8 @@ function Index() {
       </section>
 
       <footer className="px-4 pb-24 pt-8 md:py-8 text-center text-sm text-muted-foreground">
-        © {new Date().getFullYear()} ClimaLev — Refrigeração, Climatização e Manutenção Industrial ·
-        Joinville – SC
+        © {new Date().getFullYear()} SOLU THERM — Refrigeração, Climatização e Manutenção Industrial
+        · Joinville – SC
       </footer>
 
       {/* Mobile sticky bar: appears only after scrolling past the hero */}

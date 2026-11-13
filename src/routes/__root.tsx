@@ -81,12 +81,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "ClimaLev | Refrigeração e climatização em Joinville" },
+      { title: "SOLU THERM | Refrigeração e climatização em Joinville" },
       {
         name: "description",
         content: "Climatização, refrigeração e manutenção industrial em Joinville – SC.",
       },
-      { property: "og:title", content: "ClimaLev | Refrigeração e climatização em Joinville" },
+      { property: "og:title", content: "SOLU THERM | Refrigeração e climatização em Joinville" },
       {
         property: "og:description",
         content: "Climatização, refrigeração e manutenção industrial em Joinville – SC.",
