@@ -4,6 +4,9 @@ import { Menu, X } from "lucide-react";
 import brandLogo from "@/assets/solu-therm-logo.webp";
 import heroDesk from "@/assets/solu-therm-hero-desktop.webp";
 import heroMob from "@/assets/solu-therm-hero-mobile.webp";
+import splitPhoto from "@/assets/solu-therm-split.webp";
+import ceilingPhoto from "@/assets/solu-therm-piso-teto.webp";
+import repairPhoto from "@/assets/solu-therm-reparo.webp";
 import maintenancePhoto from "@/assets/solu-therm-manutencao.webp";
 import { PHONE_DISPLAY, WHATSAPP_NUMBER, whatsappLink } from "@/lib/whatsapp";
 
@@ -133,9 +136,28 @@ const FAQ = [
 ];
 
 const NAVIGATION = [
-  { href: "#orcamento", label: "Serviços" },
+  { href: "#servicos", label: "Serviços" },
+  { href: "#projetos", label: "Projetos" },
   { href: "#avaliacoes", label: "Avaliações" },
   { href: "#contato", label: "Contato" },
+];
+
+const PROJECT_PHOTOS = [
+  {
+    image: splitPhoto,
+    title: "Instalação de split",
+    alt: "Condensadora de parede com manômetros conectados",
+  },
+  {
+    image: ceilingPhoto,
+    title: "Climatização de salão",
+    alt: "Ar-condicionado de teto em instalação em um salão com janelas em arco",
+  },
+  {
+    image: repairPhoto,
+    title: "Reparo em condensadora",
+    alt: "Técnico segurando um componente ao lado de uma condensadora aberta",
+  },
 ];
 
 const REVIEW_COUNT = 18;
@@ -286,7 +308,7 @@ function Index() {
           <img
             src={heroMob}
             alt="Equipamentos de climatização instalados em uma cobertura"
-            className="h-full w-full object-cover object-[50%_35%] md:object-center"
+            className="h-full w-full object-cover object-center"
             fetchPriority="high"
           />
         </picture>
@@ -357,6 +379,74 @@ function Index() {
         </div>
         <div className="mt-8">
           <WhatsButton msg={quoteMsg}>Enviar e receber orçamento</WhatsButton>
+        </div>
+      </section>
+
+      <section id="servicos" className="scroll-mt-16 bg-secondary">
+        <div className="mx-auto grid max-w-6xl gap-8 px-4 py-14 md:grid-cols-2 md:items-center md:gap-12 md:py-20">
+          <img
+            src={maintenancePhoto}
+            alt="Equipamento de refrigeração industrial durante manutenção"
+            loading="lazy"
+            decoding="async"
+            width={960}
+            height={540}
+            className="aspect-video w-full rounded-2xl object-cover"
+          />
+          <div>
+            <h2 className="text-3xl font-extrabold md:text-4xl">
+              Climatização residencial, comercial e industrial
+            </h2>
+            <dl className="mt-5 space-y-4 text-muted-foreground">
+              <div>
+                <dt className="font-bold text-foreground">Instalação</dt>
+                <dd>
+                  Instalação de sistemas split, cassete, piso-teto e VRF/VRV conforme as
+                  necessidades do ambiente.
+                </dd>
+              </div>
+              <div>
+                <dt className="font-bold text-foreground">Manutenção preventiva e reparos</dt>
+                <dd>
+                  Limpeza e revisão dos equipamentos, diagnóstico de falhas e reparo no local.
+                </dd>
+              </div>
+              <div>
+                <dt className="font-bold text-foreground">Refrigeração comercial e industrial</dt>
+                <dd>
+                  Atendimento técnico para sistemas de refrigeração de comércios e indústrias.
+                </dd>
+              </div>
+            </dl>
+            <div className="mt-6">
+              <WhatsButton msg={generic} size="md">
+                Solicitar orçamento
+              </WhatsButton>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="projetos" className="scroll-mt-16 mx-auto max-w-6xl px-4 py-14 md:py-20">
+        <h2 className="text-3xl font-extrabold md:text-4xl">Instalações e reparos em campo</h2>
+        <div className="mt-6 grid gap-4 sm:grid-cols-2 md:grid-cols-3">
+          {PROJECT_PHOTOS.map(({ image, title, alt }) => (
+            <figure
+              key={title}
+              className="overflow-hidden rounded-2xl border border-border bg-card"
+            >
+              <img
+                src={image}
+                alt={alt}
+                loading="lazy"
+                decoding="async"
+                width={540}
+                height={720}
+                className="aspect-[3/4] w-full object-cover"
+              />
+              <figcaption className="px-4 py-4 font-semibold">{title}</figcaption>
+            </figure>
+          ))}
         </div>
       </section>
 
@@ -442,12 +532,7 @@ function Index() {
       >
         <div>
           <h2 className="text-3xl font-extrabold md:text-4xl">Atendimento em Joinville</h2>
-          <img
-            src={maintenancePhoto}
-            alt="Equipamento de refrigeração industrial durante manutenção"
-            loading="lazy"
-            className="mt-6 aspect-video w-full rounded-2xl object-cover"
-          />
+
           <address className="mt-5 not-italic leading-relaxed">
             R. Dilma Virgilina Garcia, 107 — Aventureiro
             <br />
