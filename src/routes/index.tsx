@@ -243,7 +243,7 @@ function Index() {
         <div className="relative mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-5">
           <a
             href="#inicio"
-            className="inline-flex shrink-0 items-center rounded-xl bg-white/95 px-2 py-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring md:bg-transparent"
+            className="inline-flex shrink-0 items-center rounded-xl px-2 py-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
           >
             <img src={brandLogo} alt="SOLU THERM" className="h-11 w-auto" />
           </a>
