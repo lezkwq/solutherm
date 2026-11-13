@@ -1,9 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
-import heroDesk from "@/assets/hero-desktop.png.asset.json";
-import heroMob from "@/assets/hero-mobile.png.asset.json";
-import logo from "@/assets/qualitech-logo.png.asset.json";
-import fachada from "@/assets/fachada-loja.jpg.asset.json";
+import { useEffect, useRef, useState } from "react";
+import heroDesk from "@/assets/hero-desktop.jpg";
+import heroMob from "@/assets/hero-mobile.jpg";
+import logo from "@/assets/qualitech-logo.png";
+import fachada from "@/assets/fachada-loja.jpg";
 import { PHONE_DISPLAY, whatsappLink } from "@/lib/whatsapp";
 
 export const Route = createFileRoute("/")({
@@ -143,14 +143,23 @@ function Index() {
   const [symptom, setSymptom] = useState<string | null>(null);
   const quoteMsg = `${APPLIANCES[selected]?.msg ?? ""}${symptom ? ` Problema: ${symptom.toLowerCase()}.` : ""}`;
   const generic = "Olá! Vim pelo site e gostaria de um orçamento.";
+  const heroRef = useRef<HTMLElement>(null);
+  const [pastHero, setPastHero] = useState(false);
+  useEffect(() => {
+    const el = heroRef.current;
+    if (!el) return;
+    const io = new IntersectionObserver(([e]) => setPastHero(!e?.isIntersecting), { threshold: 0 });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
 
   return (
-    <div className="min-h-screen bg-background pb-24 text-foreground md:pb-0">
+    <div className="min-h-screen bg-background text-foreground">
       {/* Header */}
-      <header className="sticky top-0 z-40 border-b border-border bg-background/90 backdrop-blur">
+      <header className="absolute inset-x-0 top-0 z-40 md:sticky md:border-b md:border-border md:bg-background/90 md:backdrop-blur">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4">
-          <img src={logo.url} alt="Qualitech — Solução em refrigeração" className="h-14 w-auto" width={56} height={56} />
-          <div className="flex items-center gap-4">
+          <img src={logo} alt="Qualitech — Solução em refrigeração" className="h-12 w-auto rounded-xl md:h-14 md:rounded-none" width={56} height={56} />
+          <div className="hidden items-center gap-4 md:flex">
             <a href={`tel:+5548991321945`} className="hidden text-sm font-semibold text-primary md:block">
               {PHONE_DISPLAY}
             </a>
@@ -162,18 +171,18 @@ function Index() {
       </header>
 
       {/* Hero: fills exactly the first screen (minus header) */}
-      <section className="relative isolate flex h-[calc(100svh-4rem)] min-h-[520px] items-end overflow-hidden text-primary-foreground md:items-center">
+      <section ref={heroRef} className="relative isolate flex h-[100svh] min-h-[560px] md:h-[calc(100svh-4rem)] md:min-h-[520px] items-end overflow-hidden text-primary-foreground md:items-center">
         <picture className="absolute inset-0 -z-10">
-          <source media="(min-width: 768px)" srcSet={heroDesk.url} />
+          <source media="(min-width: 768px)" srcSet={heroDesk} />
           <img
-            src={heroMob.url}
+            src={heroMob}
             alt="Técnico consertando uma geladeira na cozinha do cliente"
             className="h-full w-full object-cover object-[50%_35%] md:object-center"
             fetchPriority="high"
           />
         </picture>
         <div className="hero-scrim absolute inset-0 -z-10" />
-        <div className="mx-auto w-full max-w-6xl px-5 pb-28 md:pb-0">
+        <div className="mx-auto w-full max-w-6xl px-5 pb-10 md:pb-0">
           <div className="max-w-xl">
             <a href="#avaliacoes" className="inline-flex items-center gap-2 text-sm">
               <Stars /> <strong>5,0</strong> no Google · 252 avaliações
@@ -184,11 +193,11 @@ function Index() {
             <p className="mt-3 text-base text-primary-foreground/85 md:mt-5 md:text-lg">
               Conserto de geladeira, máquina de lavar e micro-ondas em São José e região.
             </p>
-            <div className="mt-6 hidden flex-col gap-3 sm:flex-row sm:items-center md:flex">
+            <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
               <WhatsButton msg={generic} pulse>
-                Pedir orçamento no WhatsApp
+                <span className="hidden sm:inline">Pedir orçamento</span><span className="sm:hidden">Orçamento</span> no WhatsApp
               </WhatsButton>
-              <span className="text-sm text-primary-foreground/75">Resposta rápida · Aberto até 00h</span>
+              <span className="hidden text-sm text-primary-foreground/75 md:inline">Resposta rápida · Aberto até 00h</span>
             </div>
           </div>
         </div>
@@ -252,16 +261,22 @@ function Index() {
               <strong className="text-foreground">atendimento rápido</strong>.
             </p>
           </div>
-          <div className="-mx-4 mt-8 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-4 md:mx-0 md:grid md:grid-cols-3 md:overflow-visible md:px-0">
-            {REVIEWS.map((r) => (
-              <figure key={r.name} className="w-[85%] shrink-0 snap-start rounded-2xl bg-card p-6 md:w-auto">
-                <Stars />
-                <blockquote className="mt-3 leading-relaxed">“{r.text}”</blockquote>
-                <figcaption className="mt-4 text-sm">
-                  <strong>{r.name}</strong> <span className="text-muted-foreground">· {r.when}</span>
-                </figcaption>
-              </figure>
-            ))}
+          <div className="marquee-mask -mx-4 mt-8 overflow-hidden md:mx-0">
+            <div className="marquee-track flex w-max gap-4 py-2">
+              {[...REVIEWS, ...REVIEWS].map((r, i) => (
+                <figure
+                  key={i}
+                  aria-hidden={i >= REVIEWS.length}
+                  className="w-[290px] shrink-0 rounded-2xl bg-card p-6 md:w-[360px]"
+                >
+                  <Stars />
+                  <blockquote className="mt-3 leading-relaxed">“{r.text}”</blockquote>
+                  <figcaption className="mt-4 text-sm">
+                    <strong>{r.name}</strong> <span className="text-muted-foreground">· {r.when}</span>
+                  </figcaption>
+                </figure>
+              ))}
+            </div>
           </div>
           <div className="mt-6 text-center md:text-left">
             <WhatsButton msg="Olá! Vi as avaliações no site e quero um orçamento.">Quero ser atendido assim</WhatsButton>
@@ -302,7 +317,7 @@ function Index() {
         <div>
           <h2 className="text-3xl font-extrabold md:text-4xl">Empresa de verdade, endereço de verdade</h2>
           <img
-            src={fachada.url}
+            src={fachada}
             alt="Fachada da Qualitech em São José"
             loading="lazy"
             className="mt-6 aspect-video w-full rounded-2xl object-cover"
@@ -357,26 +372,21 @@ function Index() {
         </div>
       </section>
 
-      <footer className="px-4 py-8 text-center text-sm text-muted-foreground">
+      <footer className="px-4 pb-24 pt-8 md:py-8 text-center text-sm text-muted-foreground">
         © {new Date().getFullYear()} Qualitech — Solução em refrigeração · São José - SC
       </footer>
 
-      {/* Mobile sticky bar */}
-      <div className="fixed inset-x-0 bottom-0 z-50 flex gap-2 border-t border-border bg-background/95 p-3 backdrop-blur md:hidden">
-        <a
-          href="tel:+5548991321945"
-          className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full border border-border text-primary"
-          aria-label="Ligar"
-        >
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="size-6" aria-hidden="true">
-            <path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z" />
-          </svg>
-        </a>
+      {/* Mobile sticky bar: appears only after scrolling past the hero */}
+      <div
+        className={`fixed inset-x-0 bottom-0 z-50 p-3 transition-transform duration-300 md:hidden ${
+          pastHero ? "translate-y-0" : "pointer-events-none translate-y-[120%]"
+        }`}
+      >
         <a
           href={whatsappLink(generic)}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex h-14 flex-1 items-center justify-center gap-2 rounded-full bg-whats text-lg font-semibold text-whats-foreground shadow-whats"
+          className="flex h-14 w-full items-center justify-center gap-2 rounded-full bg-whats text-lg font-semibold text-whats-foreground shadow-whats"
         >
           <WhatsIcon className="size-6" /> Pedir orçamento no WhatsApp
         </a>
