@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
-import { Menu, Snowflake, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
+import brandLogo from "@/assets/solu-therm-logo.webp";
 import heroDesk from "@/assets/solu-therm-hero-desktop.webp";
 import heroMob from "@/assets/solu-therm-hero-mobile.webp";
 import maintenancePhoto from "@/assets/solu-therm-manutencao.webp";
@@ -220,10 +221,9 @@ function Index() {
         <div className="relative mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-5">
           <a
             href="#inicio"
-            className="inline-flex items-center gap-2 font-display text-xl font-extrabold md:text-primary"
+            className="inline-flex shrink-0 items-center rounded-xl bg-white/95 px-2 py-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring md:bg-transparent"
           >
-            <Snowflake className="size-6" aria-hidden="true" />
-            SOLU THERM
+            <img src={brandLogo} alt="SOLU THERM" className="h-11 w-auto" />
           </a>
           <nav
             aria-label="Navegação principal"
